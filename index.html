@@ -35,7 +35,7 @@
     </header>
 
     <!-- Hero Section -->
-    <section class="py-16 text-center min-h-[75vh] flex items-center">
+    <section class="py-16 text-center min-h-[75vh] flex items-center px-4">
       <div class="container mx-auto">
         <h2 class="lg:text-4xl text-2xl font-bold text-[#4db5ff] mb-4">
           Berita Terkini & Peluang Karir
@@ -130,7 +130,7 @@
             </div>
           </div>
 
-          <div class="w-full lg:w-3/5">
+          <div class="w-full lg:w-3/5 max-w-[90vw]">
             <!--Slider wrapper-->
             <div class="swiper newsSwiper">
               <div class="swiper-wrapper p-8" id="news-container"></div>
@@ -145,7 +145,7 @@
         <div
           class="flex justify-center flex-wrap md:flex-wrap lg:flex-nowrap lg:flex-row lg:justify-between gap-8"
         >
-          <div class="w-full lg:w-3/5">
+          <div class="w-full lg:w-3/5 max-w-[90vw]">
             <!--Slider wrapper-->
             <div class="swiper lokerSwiper">
               <div class="swiper-wrapper p-8" id="job-container"></div>
@@ -287,7 +287,7 @@
           const newsContainer = $("#news-container");
           Items.forEach((item) => {
             const newsHTML = `
-                <div class="swiper-slide bg-white h-full rounded-xl shadow-md overflow-hidden border hover:border-slate-300 cursor-pointer hover:scale-105 transition duration-300 hover:shadow-xl w-full max-lg:max-w-xl lg:w-1/2 group" data-news-id="${
+                <div class="swiper-slide bg-white h-full rounded-xl shadow-md overflow-hidden border hover:border-slate-300 cursor-pointer hover:scale-105 transition duration-300 hover:shadow-xl w-11/12 max-lg:max-w-xl lg:w-1/2 group" data-news-id="${
                   item.ItemId
                 }">
                     <div class="relative">
@@ -357,7 +357,7 @@
           const jobContainer = $("#job-container");
           data.forEach((job) => {
             const jobHTML = `
-                 <div class="relative swiper-slide w-full max-lg:max-w-xl lg:w-1/2 group bg-white flex flex-col border rounded-xl shadow-md  border-2 hover:border-slate-300 cursor-pointer hover:scale-105 transition duration-300 hover:shadow-xl" data-job-id="${
+                 <div class="relative swiper-slide w-11/12 max-lg:max-w-xl lg:w-1/2 group bg-white flex flex-col border rounded-xl shadow-md  border-2 hover:border-slate-300 cursor-pointer hover:scale-105 transition duration-300 hover:shadow-xl" data-job-id="${
                    job.id
                  }">
 
@@ -484,76 +484,82 @@
     loadJobs(currentPage);
     // Muat halaman pertama saat dokumen siap
     loadNews(currentPageNews);
-    var swiper = new Swiper(".newsSwiper", {
-      slidesPerView: 2,
-      spaceBetween: 28,
-      centeredSlides: false,
-      loop: true,
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-      },
-      navigation: {
-        nextEl: ".swiper-button-next-news",
-        prevEl: ".swiper-button-prev-news",
-      },
-      breakpoints: {
-        0: {
-          slidesPerView: 1,
-          spaceBetween: 20,
-          centeredSlides: false,
+    setTimeout(() => {
+      var swiper = new Swiper(".newsSwiper", {
+        observer: true,
+        observeParents: true,
+        slidesPerView: 2,
+        spaceBetween: 28,
+        centeredSlides: false,
+        loop: true,
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
         },
-        568: {
-          slidesPerView: 2,
-          spaceBetween: 28,
-          centeredSlides: false,
+        navigation: {
+          nextEl: ".swiper-button-next-news",
+          prevEl: ".swiper-button-prev-news",
         },
-        768: {
-          slidesPerView: 2,
-          spaceBetween: 28,
-          centeredSlides: false,
+        breakpoints: {
+          0: {
+            slidesPerView: 1,
+            spaceBetween: 20,
+            centeredSlides: true,
+          },
+          568: {
+            slidesPerView: 1,
+            spaceBetween: 28,
+            centeredSlides: true,
+          },
+          768: {
+            slidesPerView: 2,
+            spaceBetween: 28,
+            centeredSlides: false,
+          },
+          1024: {
+            slidesPerView: 2,
+            spaceBetween: 32,
+          },
         },
-        1024: {
-          slidesPerView: 2,
-          spaceBetween: 32,
+      });
+      var swiper = new Swiper(".lokerSwiper", {
+        observer: true,
+        observeParents: true,
+        slidesPerView: 2,
+        spaceBetween: 28,
+        centeredSlides: false,
+        loop: true,
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
         },
-      },
-    });
-    var swiper = new Swiper(".lokerSwiper", {
-      slidesPerView: 2,
-      spaceBetween: 28,
-      centeredSlides: false,
-      loop: true,
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-      },
-      navigation: {
-        nextEl: ".swiper-button-next-loker",
-        prevEl: ".swiper-button-prev-loker",
-      },
-      breakpoints: {
-        0: {
-          slidesPerView: 1,
-          spaceBetween: 20,
-          centeredSlides: false,
+        navigation: {
+          nextEl: ".swiper-button-next-loker",
+          prevEl: ".swiper-button-prev-loker",
         },
-        568: {
-          slidesPerView: 2,
-          spaceBetween: 28,
-          centeredSlides: false,
+        breakpoints: {
+          0: {
+            slidesPerView: 1,
+            spaceBetween: 20,
+            centeredSlides: true,
+          },
+          568: {
+            slidesPerView: 1,
+            spaceBetween: 28,
+            centeredSlides: true,
+          },
+          768: {
+            slidesPerView: 2,
+            spaceBetween: 28,
+            centeredSlides: false,
+          },
+          1024: {
+            slidesPerView: 2,
+            spaceBetween: 32,
+          },
         },
-        768: {
-          slidesPerView: 2,
-          spaceBetween: 28,
-          centeredSlides: false,
-        },
-        1024: {
-          slidesPerView: 2,
-          spaceBetween: 32,
-        },
-      },
-    });
+      });
+    }, 1000);
   });
 </script>
 
