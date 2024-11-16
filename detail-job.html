@@ -19,18 +19,36 @@
     />
   </head>
   <body class="bg-gray-100 text-gray-800">
-    <header class="bg-[#4db5ff] text-white p-4">
+    <header class="bg-[#4db5ff] text-white p-4 sticky top-0 z-40">
       <div class="container mx-auto flex justify-between items-center">
         <h1 class="text-2xl font-bold">
           <a href="index.html"> InfoNefy </a>
         </h1>
-        <nav class="space-x-4">
+        <nav class="space-x-4 lg:block hidden">
           <a href="news.html" class="hover:underline">Berita</a>
           <a href="job-vacancy.html" class="hover:underline">Lowongan Kerja</a>
           <a href="about.html" class="hover:underline">Tentang</a>
         </nav>
+
+        <button id="menu-toggle" class="block lg:hidden text-white">
+          <i class="fas fa-bars"></i>
+        </button>
       </div>
     </header>
+    <div
+      class="fixed inset-0 z-50 absolute top-16 left-0 w-full h-fit bg-[#4db5ff] bg-opacity-90 hidden"
+      id="navbar-menu"
+    >
+      <div class="container mx-auto p-4 text-white relative z-10">
+        <nav class="flex flex-col gap-4">
+          <a href="news.html" class="hover:underline text-white">Berita</a>
+          <a href="job-vacancy.html" class="hover:underline text-white"
+            >Lowongan Kerja</a
+          >
+          <a href="about.html" class="hover:underline text-white">Tentang</a>
+        </nav>
+      </div>
+    </div>
     <div class="container mx-auto p-4">
       <!-- Breadcrumb -->
       <div class="flex items-center justify-between">
@@ -248,6 +266,15 @@
             );
           },
         });
+      });
+      $("#menu-toggle").click(function () {
+        $("#navbar-menu").toggleClass("hidden");
+
+        if ($("#menu-toggle i").hasClass("fa-bars")) {
+          $("#menu-toggle i").removeClass("fa-bars").addClass("fa-times");
+        } else {
+          $("#menu-toggle i").removeClass("fa-times").addClass("fa-bars");
+        }
       });
     </script>
   </body>
