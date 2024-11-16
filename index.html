@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>InfoNefy - Portal Berita dan Lowongan Kerja</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  </head>
+  <body class="bg-white text-gray-800">
+    <!-- Header -->
+    <header class="bg-[#4db5ff] text-white p-4">
+      <div class="container mx-auto flex justify-between items-center">
+        <h1 class="text-2xl font-bold">
+          <a href="index.html"> InfoNefy </a>
+        </h1>
+        <nav class="space-x-4">
+          <a href="news.html" class="hover:underline">Berita</a>
+          <a href="job-vacancy.html" class="hover:underline">Lowongan Kerja</a>
+          <a href="about.html" class="hover:underline">Tentang</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="py-16 text-center min-h-[75vh] flex items-center">
+      <div class="container mx-auto">
+        <h2 class="lg:text-4xl text-2xl font-bold text-[#4db5ff] mb-4">
+          Berita Terkini & Peluang Karir
+        </h2>
+        <p class="lg:text-lg text-base text-gray-700 mb-6">
+          Dapatkan informasi terpercaya dan peluang kerja terbaik di sini.
+        </p>
+        <a
+          href="#berita"
+          class="bg-[#4db5ff] text-white py-2 px-4 rounded min-w-[300px] text-center mx-2"
+        >
+          Lihat Berita
+        </a>
+        <a
+          href="#lowongan"
+          class="bg-[#4db5ff] text-white py-2 px-4 rounded min-w-[300px] text-center mx-2"
+        >
+          Lihat Lowongan
+        </a>
+      </div>
+    </section>
+
+    <section
+      id="berita"
+      class="py-16 bg-gray-200 min-h-[75vh] flex items-center"
+    >
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div
+          class="flex justify-center flex-wrap md:flex-wrap lg:flex-nowrap lg:flex-row lg:justify-between gap-8 w-full overflow-hidden"
+        >
+          <div class="w-full flex justify-between flex-col lg:w-2/5">
+            <div class="block lg:text-left text-center">
+              <h2
+                class="text-4xl font-bold text-gray-900 leading-[3.25rem] mb-5"
+              >
+                Berita <span class="text-[#4db5ff]">Terkini</span>
+              </h2>
+              <p class="text-gray-500 mb-10 max-lg:max-w-xl max-lg:mx-auto">
+                Dapatkan informasi terbaru dan terpercaya dari berbagai sumber
+                berita terkemuka di Indonesia.
+              </p>
+              <a
+                href="news.html"
+                class="cursor-pointer border border-gray-300 shadow-sm rounded-full py-3.5 px-7 w-52 lg:mx-0 mx-auto flex justify-center text-gray-900 font-semibold transition-all duration-300 hover:bg-gray-100"
+                >View All</a
+              >
+            </div>
+            <!-- Slider controls -->
+            <div
+              class="flex items-center lg:justify-start justify-center lg:mt-0 mt-8 gap-8 mb-4"
+            >
+              <button
+                id="slider-button-left"
+                class="swiper-button-prev swiper-button-prev-news group flex justify-center items-center border border-solid border-[#4db5ff] w-11 h-11 transition-all duration-500 rounded-full hover:bg-[#4db5ff]"
+                data-carousel-prev
+              >
+                <svg
+                  class="h-6 w-6 text-[#4db5ff] group-hover:text-white"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M20.9999 12L4.99992 12M9.99992 6L4.70703 11.2929C4.3737 11.6262 4.20703 11.7929 4.20703 12C4.20703 12.2071 4.3737 12.3738 4.70703 12.7071L9.99992 18"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+              <button
+                id="slider-button-right"
+                class="swiper-button-next swiper-button-next-news group flex justify-center items-center border border-solid border-[#4db5ff] w-11 h-11 transition-all duration-500 rounded-full hover:bg-[#4db5ff]"
+                data-carousel-next
+              >
+                <svg
+                  class="h-6 w-6 text-[#4db5ff] group-hover:text-white"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M3 12L19 12M14 18L19.2929 12.7071C19.6262 12.3738 19.7929 12.2071 19.7929 12C19.7929 11.7929 19.6262 11.6262 19.2929 11.2929L14 6"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="w-full lg:w-3/5">
+            <!--Slider wrapper-->
+            <div class="swiper newsSwiper">
+              <div class="swiper-wrapper p-8" id="news-container"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="lowongan" class="py-16 min-h-[75vh] flex items-center">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div
+          class="flex justify-center flex-wrap md:flex-wrap lg:flex-nowrap lg:flex-row lg:justify-between gap-8"
+        >
+          <div class="w-full lg:w-3/5">
+            <!--Slider wrapper-->
+            <div class="swiper lokerSwiper">
+              <div class="swiper-wrapper p-8" id="job-container"></div>
+            </div>
+          </div>
+
+          <div class="w-full flex justify-between flex-col lg:w-2/5">
+            <div class="block lg:text-right text-center">
+              <h2
+                class="text-4xl font-bold text-gray-900 leading-[3.25rem] mb-5"
+              >
+                Lowongan <span class="text-[#4db5ff]">Terkini</span>
+              </h2>
+              <p class="text-gray-500 mb-10 max-lg:max-w-xl max-lg:mx-auto">
+                Dapatkan informasi lowongan pekerjaan terbaru dan terpercaya
+              </p>
+              <a
+                href="job-vacancy.html"
+                class="cursor-pointer border border-gray-300 shadow-sm rounded-full py-3.5 px-7 w-52 lg:mx-0 mx-auto flex justify-center text-gray-900 font-semibold transition-all duration-300 hover:bg-gray-100 lg:ml-auto"
+                >View All</a
+              >
+            </div>
+            <!-- Slider controls -->
+            <div
+              class="flex items-center lg:justify-end justify-center lg:mt-0 mt-8 gap-8 mb-4"
+            >
+              <button
+                id="slider-button-left"
+                class="swiper-button-prev swiper-button-prev-loker group flex justify-center items-center border border-solid border-[#4db5ff] w-11 h-11 transition-all duration-500 rounded-full hover:bg-[#4db5ff]"
+                data-carousel-prev
+              >
+                <svg
+                  class="h-6 w-6 text-[#4db5ff] group-hover:text-white"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M20.9999 12L4.99992 12M9.99992 6L4.70703 11.2929C4.3737 11.6262 4.20703 11.7929 4.20703 12C4.20703 12.2071 4.3737 12.3738 4.70703 12.7071L9.99992 18"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+              <button
+                id="slider-button-right"
+                class="swiper-button-next swiper-button-next-loker group flex justify-center items-center border border-solid border-[#4db5ff] w-11 h-11 transition-all duration-500 rounded-full hover:bg-[#4db5ff]"
+                data-carousel-next
+              >
+                <svg
+                  class="h-6 w-6 text-[#4db5ff] group-hover:text-white"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M3 12L19 12M14 18L19.2929 12.7071C19.6262 12.3738 19.7929 12.2071 19.7929 12C19.7929 11.7929 19.6262 11.6262 19.2929 11.2929L14 6"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#4db5ff] text-white py-4">
+      <div class="container mx-auto text-center">
+        <p>&copy; 2024 InfoNefy. Semua Hak Dilindungi.</p>
+        <p>
+          Disclaimer: Situs ini dibuat hanya untuk keperluan tugas/
+          pembelajaran.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<script>
+  $(document).ready(function () {
+    const endpointNews =
+      "https://www.idx.co.id/primary/NewsAnnouncement/GetNewsSearch";
+    let currentPageNews = 1; // Halaman saat ini
+    let isLoadingNews = false; // Status loading
+    let isEndOfContentNews = false; // Menandai akhir konten
+    let searchKeywordNews = ""; // Menyimpan kata kunci pencarian
+    let searchTimeoutNews; // Timeout untuk pencarian
+
+    const endpoint =
+      "https://id.jobstreet.com/api/jobsearch/v5/search?siteKey=ID-Main";
+    let currentPage = 1;
+    const detailEndpoint = "https://id.jobstreet.com/graphql";
+    let isLoading = false;
+    let isEndOfContent = false;
+    let searchKeyword = "";
+    let searchTimeout;
+
+    // Fungsi untuk menampilkan spinner loading
+    function showLoading(show) {
+      if (show) {
+        $("#loading-spinner").removeClass("hidden");
+      } else {
+        $("#loading-spinner").addClass("hidden");
+      }
+    }
+
+    // Fungsi untuk memuat berita
+    function loadNews(pageNumber) {
+      if (isLoadingNews || isEndOfContentNews) return; // Jangan muat lagi jika sedang loading atau sudah di akhir
+
+      isLoadingNews = true; // Set status loading
+      showLoading(true); // Tampilkan spinner
+      $.ajax({
+        url: endpointNews,
+        method: "GET",
+        data: {
+          locale: "id-id",
+          pageNumber: pageNumber,
+          pageSize: 5,
+          keyword: searchKeywordNews, // Kirim kata kunci pencarian
+        },
+        success: function (response) {
+          const { Items, PageCount } = response;
+
+          if (Items.length === 0 || currentPageNews > PageCount) {
+            isEndOfContentNews = true; // Tandai akhir konten
+            $("#end-of-content").removeClass("hidden");
+            return;
+          }
+
+          // Tampilkan berita
+          const newsContainer = $("#news-container");
+          Items.forEach((item) => {
+            const newsHTML = `
+                <div class="swiper-slide bg-white h-full rounded-xl shadow-md overflow-hidden border hover:border-slate-300 cursor-pointer hover:scale-105 transition duration-300 hover:shadow-xl w-full max-lg:max-w-xl lg:w-1/2 group" data-news-id="${
+                  item.ItemId
+                }">
+                    <div class="relative">
+                        <img class="w-full h-48 object-cover" src="https://www.idx.co.id${
+                          item.ImageUrl
+                        }">
+                        <div class="absolute bottom-0 right-0 bg-gray-800 text-white px-2 py-1 m-2 rounded-md text-xs"> ${new Date(
+                          item.PublishedDate
+                        ).toLocaleDateString("en-GB", {
+                          day: "2-digit",
+                          month: "long",
+                          year: "numeric",
+                        })}
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="text-lg font-medium text-gray-800 mb-2 line-clamp-2">${
+                          item.Title
+                        }</div>
+                        <p class="text-gray-500 text-sm line-clamp-3">
+                         ${item.Summary}
+                        </p>
+                    </div>
+                </div>
+                `;
+
+            newsContainer.append(newsHTML);
+          });
+
+          currentPageNews++; // Increment halaman
+        },
+        error: function (error) {
+          console.error("Error fetching data:", error);
+        },
+        complete: function () {
+          isLoadingNews = false; // Reset status loading
+          showLoading(false); // Sembunyikan spinner
+        },
+      });
+    }
+
+    function loadJobs(pageNumber) {
+      if (isLoading || isEndOfContent) return;
+
+      isLoading = true;
+      showLoading(true);
+
+      $.ajax({
+        url: endpoint,
+        method: "GET",
+        data: {
+          page: pageNumber,
+          pageSize: 12,
+          locale: "id-ID",
+          include: "seodata,joracrosslink,gptTargeting",
+          keywords: searchKeyword,
+        },
+        success: function (response) {
+          const { data } = response;
+
+          if (!data || data.length === 0) {
+            isEndOfContent = true;
+            $("#end-of-content").removeClass("hidden");
+            return;
+          }
+
+          const jobContainer = $("#job-container");
+          data.forEach((job) => {
+            const jobHTML = `
+                 <div class="relative swiper-slide w-full max-lg:max-w-xl lg:w-1/2 group bg-white flex flex-col border rounded-xl shadow-md  border-2 hover:border-slate-300 cursor-pointer hover:scale-105 transition duration-300 hover:shadow-xl" data-job-id="${
+                   job.id
+                 }">
+
+            <div class="relative rounded-t-xl" >
+                <div class="relative w-full aspect-video rounded-t-xl">
+                    <img class="rounded  h-full mx-auto object-none object-top-center rounded-t-xl"
+                        src="${job.branding?.serpLogoUrl || ""}" alt="${
+              job.title
+            }">
+
+                    <div
+                        class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-b from-gray-800 to-gray-500 text-white">
+                       
+                        <p class="font-medium text-sm"> <i class="fa-solid fa-location-dot mr-3"></i> ${
+                          job.locations[0]?.label
+                        }</p>
+                </div>
+                </div>
+                </div>
+                
+                <div class="flex flex-col justify-beetween gap-3 px-4 py-2 h-full">
+                  <h2 class="text-lg font-semibold">${job.title}</h2>
+                  <p class="font-medium text-sm">${
+                    job.classifications[0].subclassification?.description
+                  } (${job.classifications[0].classification?.description})</p>
+                  ${
+                    job.advertiser.description
+                      ? `<p class="text-gray-600 mt-2"><i class="fa-solid fa-building mr-3"></i> ${job.advertiser.description}</p>`
+                      : ""
+                  }
+                  ${
+                    job.locations[0]?.label
+                      ? `<p class="text-gray-600"><i class="fa-solid fa-location-dot mr-3"></i> ${job.locations[0]?.label}</p>`
+                      : ""
+                  }
+                  ${
+                    job.salaryLabel
+                      ? `<p class="text-gray-600"><i class="fa-solid fa-dollar-sign mr-3"></i> ${job.salaryLabel}</p>`
+                      : ""
+                  }
+                 
+
+               <p class="text-sm text-gray-500 ml-auto mb-2 mt-auto">Tanggal Posting: ${
+                 job.listingDateDisplay || "Tidak tersedia"
+               }</p>
+            </div>
+
+        </div>
+                `;
+            jobContainer.append(jobHTML);
+          });
+
+          currentPage++;
+        },
+        error: function (error) {
+          console.error("Error fetching data:", error);
+        },
+        complete: function () {
+          isLoading = false;
+          showLoading(false);
+        },
+      });
+    }
+
+    $("#job-container").on("click", ".cursor-pointer", function () {
+      const jobId = $(this).data("job-id");
+      const correlationId = crypto.randomUUID();
+      const payload = {
+        operationName: "TrackJobDetailsViewed",
+        variables: {
+          locale: "en-AU",
+          input: {
+            jobseekerSessionId: crypto.randomUUID(),
+            jobId: jobId,
+            jobDetailsViewedCorrelationId: correlationId,
+            tags: {},
+          },
+        },
+        query: `mutation TrackJobDetailsViewed($input: TrackJobDetailsViewedInput!, $locale: Locale = "en-AU") {
+            trackJobDetailsViewed(input: $input) {
+              __typename
+              ... on TrackJobDetailsViewedSuccess {
+                __typename
+                eventId
+              }
+              ... on TrackJobDetailsViewedFailure {
+                error {
+                  __typename
+                  message(locale: $locale)
+                }
+                __typename
+              }
+            }
+          }`,
+      };
+
+      $.ajax({
+        url: detailEndpoint,
+        method: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(payload),
+        success: function (response) {
+          if (
+            response.data.trackJobDetailsViewed.__typename ===
+            "TrackJobDetailsViewedSuccess"
+          ) {
+            window.location.href = `detail-job.html?jobId=${jobId}`;
+          } else {
+            console.error("Failed to track job details:", response);
+          }
+        },
+        error: function (error) {
+          console.error("Error fetching job details:", error);
+        },
+      });
+    });
+
+    // Event listener untuk klik pada card
+    $("#news-container").on("click", ".cursor-pointer", function () {
+      const newsId = $(this).data("news-id"); // Ambil ID berita dari atribut data-news-id
+      window.location.href = `detail-news.html?newsId=${newsId}`; // Arahkan ke halaman detail
+    });
+
+    loadJobs(currentPage);
+    // Muat halaman pertama saat dokumen siap
+    loadNews(currentPageNews);
+    var swiper = new Swiper(".newsSwiper", {
+      slidesPerView: 2,
+      spaceBetween: 28,
+      centeredSlides: false,
+      loop: true,
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+      navigation: {
+        nextEl: ".swiper-button-next-news",
+        prevEl: ".swiper-button-prev-news",
+      },
+      breakpoints: {
+        0: {
+          slidesPerView: 1,
+          spaceBetween: 20,
+          centeredSlides: false,
+        },
+        568: {
+          slidesPerView: 2,
+          spaceBetween: 28,
+          centeredSlides: false,
+        },
+        768: {
+          slidesPerView: 2,
+          spaceBetween: 28,
+          centeredSlides: false,
+        },
+        1024: {
+          slidesPerView: 2,
+          spaceBetween: 32,
+        },
+      },
+    });
+    var swiper = new Swiper(".lokerSwiper", {
+      slidesPerView: 2,
+      spaceBetween: 28,
+      centeredSlides: false,
+      loop: true,
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+      navigation: {
+        nextEl: ".swiper-button-next-loker",
+        prevEl: ".swiper-button-prev-loker",
+      },
+      breakpoints: {
+        0: {
+          slidesPerView: 1,
+          spaceBetween: 20,
+          centeredSlides: false,
+        },
+        568: {
+          slidesPerView: 2,
+          spaceBetween: 28,
+          centeredSlides: false,
+        },
+        768: {
+          slidesPerView: 2,
+          spaceBetween: 28,
+          centeredSlides: false,
+        },
+        1024: {
+          slidesPerView: 2,
+          spaceBetween: 32,
+        },
+      },
+    });
+  });
+</script>
+
+<style>
+  .swiper-button-prev:after,
+  .swiper-rtl .swiper-button-next:after {
+    content: "" !important;
+  }
+
+  .swiper-button-next:after,
+  .swiper-rtl .swiper-button-prev:after {
+    content: "" !important;
+  }
+
+  .swiper-button-next svg,
+  .swiper-button-prev svg {
+    width: 24px !important;
+    height: 24px !important;
+  }
+
+  .swiper-button-next,
+  .swiper-button-prev {
+    position: relative !important;
+  }
+
+  .swiper-slide.swiper-slide-active {
+    --tw-border-opacity: 1 !important;
+    border-color: rgb(79 70 229 / var(--tw-border-opacity)) !important;
+  }
+
+  .swiper-slide.swiper-slide-active > .swiper-slide-active\:text-\[\#4db5ff\] {
+    --tw-text-opacity: 1;
+    color: rgb(79 70 229 / var(--tw-text-opacity));
+  }
+
+  .swiper-slide.swiper-slide-active
+    > .flex
+    .grid
+    .swiper-slide-active\:text-\[\#4db5ff\] {
+    --tw-text-opacity: 1;
+    color: rgb(79 70 229 / var(--tw-text-opacity));
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+</style>

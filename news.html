@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Infinite Scroll News</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/arial-geo-bold@1.0.0/css/arial-geo-bold.min.css"
+    />
+  </head>
+  <body class="bg-gray-100 text-gray-800">
+    <header class="bg-[#4db5ff] text-white p-4">
+      <div class="container mx-auto flex justify-between items-center">
+        <h1 class="text-2xl font-bold">
+          <a href="index.html"> InfoNefy </a>
+        </h1>
+        <nav class="space-x-4">
+          <a href="news.html" class="underline">Berita</a>
+          <a href="job-vacancy.html" class="hover:underline">Lowongan Kerja</a>
+          <a href="#kontak" class="hover:underline">Tentang</a>
+        </nav>
+      </div>
+    </header>
+    <!-- Container untuk Daftar Berita -->
+    <div class="container mx-auto p-4">
+      <h1 class="text-2xl font-bold mb-4">Daftar Berita</h1>
+
+      <!-- Input Pencarian -->
+      <div class="mb-6">
+        <input
+          type="text"
+          id="search-input"
+          class="w-full p-2 border border-gray-300 rounded"
+          placeholder="Cari berita..."
+        />
+      </div>
+
+      <div
+        id="news-container"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+      >
+        <!-- Berita akan dimuat di sini -->
+      </div>
+
+      <!-- Loading Spinner -->
+      <div
+        id="loading-spinner"
+        class="hidden flex justify-center items-center py-4"
+      >
+        <div
+          class="w-8 h-8 border-4 border-blue-500 border-dashed rounded-full animate-spin"
+        ></div>
+      </div>
+
+      <!-- Pesan Akhir Halaman -->
+      <div id="end-of-content" class="hidden text-center text-gray-600 py-4">
+        <p>Tidak ada berita lagi untuk dimuat.</p>
+      </div>
+    </div>
+
+    <script>
+      $(document).ready(function () {
+        const endpoint =
+          "https://www.idx.co.id/primary/NewsAnnouncement/GetNewsSearch";
+        let currentPage = 1; // Halaman saat ini
+        let isLoading = false; // Status loading
+        let isEndOfContent = false; // Menandai akhir konten
+        let searchKeyword = ""; // Menyimpan kata kunci pencarian
+        let searchTimeout; // Timeout untuk pencarian
+
+        // Fungsi untuk menampilkan spinner loading
+        function showLoading(show) {
+          if (show) {
+            $("#loading-spinner").removeClass("hidden");
+          } else {
+            $("#loading-spinner").addClass("hidden");
+          }
+        }
+
+        // Fungsi untuk memuat berita
+        function loadNews(pageNumber) {
+          if (isLoading || isEndOfContent) return; // Jangan muat lagi jika sedang loading atau sudah di akhir
+
+          isLoading = true; // Set status loading
+          showLoading(true); // Tampilkan spinner
+          $.ajax({
+            url: endpoint,
+            method: "GET",
+            data: {
+              locale: "id-id",
+              pageNumber: pageNumber,
+              pageSize: 12,
+              keyword: searchKeyword, // Kirim kata kunci pencarian
+            },
+            success: function (response) {
+              const { Items, PageCount } = response;
+
+              if (Items.length === 0 || currentPage > PageCount) {
+                isEndOfContent = true; // Tandai akhir konten
+                $("#end-of-content").removeClass("hidden");
+                return;
+              }
+
+              // Tampilkan berita
+              const newsContainer = $("#news-container");
+              Items.forEach((item) => {
+                const newsHTML = `
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border hover:border-slate-300 cursor-pointer hover:scale-105 transition duration-300 hover:shadow-xl" data-news-id="${
+                  item.ItemId
+                }">
+                    <div class="relative">
+                        <img class="w-full h-48 object-cover" src="https://www.idx.co.id${
+                          item.ImageUrl
+                        }">
+                        <div class="absolute bottom-0 right-0 bg-gray-800 text-white px-2 py-1 m-2 rounded-md text-xs"> ${new Date(
+                          item.PublishedDate
+                        ).toLocaleDateString("en-GB", {
+                          day: "2-digit",
+                          month: "long",
+                          year: "numeric",
+                        })}
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="text-lg font-medium text-gray-800 mb-2">${
+                          item.Title
+                        }</div>
+                        <p class="text-gray-500 text-sm line-clamp-3">
+                         ${item.Summary}
+                        </p>
+                    </div>
+                </div>
+                `;
+                newsContainer.append(newsHTML);
+              });
+
+              currentPage++; // Increment halaman
+            },
+            error: function (error) {
+              console.error("Error fetching data:", error);
+            },
+            complete: function () {
+              isLoading = false; // Reset status loading
+              showLoading(false); // Sembunyikan spinner
+            },
+          });
+        }
+
+        // Event listener untuk klik pada card
+        $("#news-container").on("click", ".cursor-pointer", function () {
+          const newsId = $(this).data("news-id"); // Ambil ID berita dari atribut data-news-id
+          window.location.href = `detail-news.html?newsId=${newsId}`; // Arahkan ke halaman detail
+        });
+
+        // Event Scroll: Deteksi jika pengguna mencapai bagian bawah halaman
+        $(window).scroll(function () {
+          if (
+            $(window).scrollTop() + $(window).height() >=
+            $(document).height() - 50
+          ) {
+            loadNews(currentPage); // Muat halaman berikutnya
+          }
+        });
+
+        // Event Pencarian: Deteksi perubahan kata kunci
+        $("#search-input").on("input", function () {
+          clearTimeout(searchTimeout); // Hapus timeout sebelumnya
+          searchKeyword = $(this).val(); // Simpan kata kunci pencarian
+          searchTimeout = setTimeout(function () {
+            if (!isLoading) {
+              currentPage = 1; // Reset halaman saat melakukan pencarian baru
+              isEndOfContent = false; // Reset status akhir konten
+              $("#news-container").empty(); // Kosongkan konten berita yang ada
+              loadNews(currentPage); // Muat berita baru berdasarkan kata kunci
+            }
+          }, 500); // Tunggu 500ms sebelum mengirim permintaan pencarian
+        });
+
+        // Muat halaman pertama saat dokumen siap
+        loadNews(currentPage);
+      });
+    </script>
+  </body>
+</html>

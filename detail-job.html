@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Detail Lowongan Kerja</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/arial-geo-bold@1.0.0/css/arial-geo-bold.min.css"
+    />
+  </head>
+  <body class="bg-gray-100 text-gray-800">
+    <header class="bg-[#4db5ff] text-white p-4">
+      <div class="container mx-auto flex justify-between items-center">
+        <h1 class="text-2xl font-bold">
+          <a href="index.html"> InfoNefy </a>
+        </h1>
+        <nav class="space-x-4">
+          <a href="news.html" class="hover:underline">Berita</a>
+          <a href="job-vacancy.html" class="hover:underline">Lowongan Kerja</a>
+          <a href="#kontak" class="hover:underline">Tentang</a>
+        </nav>
+      </div>
+    </header>
+    <div class="container mx-auto p-4">
+      <!-- Breadcrumb -->
+      <div class="flex items-center justify-between">
+        <button
+          id="back-button"
+          class="bg-slate-400 text-white p-2 rounded mb-4 flex items-center pr-2"
+          onclick="window.location.href = 'job-vacancy.html'"
+        >
+          <i class="fa-solid fa-chevron-left mr-2"></i>
+          <span>Kembali</span>
+        </button>
+
+        <nav class="mb-4 ml-12" aria-label="Breadcrumb">
+          <ol class="list-reset flex text-gray-500">
+            <li>
+              <a
+                href="index.html"
+                class="text-blue-600 hover:underline flex items-center gap-2"
+              >
+                <i class="fa-solid fa-house"></i> Beranda</a
+              >
+            </li>
+            <li></li>
+            <li><span class="mx-2">/</span></li>
+            <li>
+              <a href="job-vacancy.html" class="hover:underline">Loker</a>
+            </li>
+            <li><span class="mx-2">/</span></li>
+            <li class="line-clamp-1" id="breadcrumb-title">Detail Loker</li>
+          </ol>
+        </nav>
+      </div>
+
+      <h1 class="text-2xl font-bold mb-4" id="job-title">Detail Lowongan</h1>
+      <div id="job-detail" class="bg-white p-6 rounded shadow-lg">
+        <div id="loading-spinner" class="flex justify-center items-center py-4">
+          <div
+            class="w-8 h-8 border-4 border-blue-500 border-dashed rounded-full animate-spin"
+          ></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      $(document).ready(function () {
+        const detailEndpoint = "https://id.jobstreet.com/graphql";
+
+        function getQueryParameter(name) {
+          const urlParams = new URLSearchParams(window.location.search);
+          return urlParams.get(name);
+        }
+
+        const jobId = getQueryParameter("jobId");
+
+        if (!jobId) {
+          $("#job-detail").html(
+            "<p class='text-red-500'>Lowongan tidak ditemukan!</p>"
+          );
+          return;
+        }
+
+        // Generate UUID untuk correlationId dan sessionId
+        function generateUUID() {
+          return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
+            (
+              c ^
+              (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
+            ).toString(16)
+          );
+        }
+
+        const correlationId = generateUUID();
+        const sessionId = generateUUID();
+
+        const payload = {
+          operationName: "jobDetails",
+          variables: {
+            jobId: jobId,
+            jobDetailsViewedCorrelationId: correlationId,
+            sessionId: sessionId,
+            zone: "asia-4",
+            locale: "id-ID",
+            languageCode: "id",
+            countryCode: "ID",
+            timezone: "Asia/Jakarta",
+          },
+          query: `
+          query jobDetails(
+            $jobId: ID!,
+            $jobDetailsViewedCorrelationId: String!,
+            $sessionId: String!,
+            $zone: Zone!,
+            $locale: Locale!,
+            $languageCode: LanguageCodeIso!,
+
+            $timezone: Timezone!
+          ) {
+            jobDetails(
+              id: $jobId,
+              tracking: {
+                channel: "WEB",
+                jobDetailsViewedCorrelationId: $jobDetailsViewedCorrelationId,
+                sessionId: $sessionId
+              }
+            ) {
+              job {
+                id
+                title
+                abstract
+                content(platform: WEB)
+                location {
+                  label(locale: $locale, type: LONG)
+                }
+                salary {
+                  label
+                  currencyLabel(zone: $zone)
+                }
+                workTypes {
+                  label(locale: $locale)
+                }
+                advertiser {
+                  name(locale: $locale)
+                }
+                listedAt {
+                  label(context: JOB_POSTED, length: SHORT, timezone: $timezone, locale: $locale)
+                }
+                classifications {
+                  label(languageCode: $languageCode)
+                }
+                products {
+                  branding {
+                    logo {
+                      url
+                    }
+                    cover {
+                      url
+                    }
+                  }
+                }
+              }
+            }
+          }
+        `,
+        };
+
+        $.ajax({
+          url: "https://id.jobstreet.com/graphql",
+          method: "POST",
+          contentType: "application/json",
+          data: JSON.stringify(payload),
+          success: function (response) {
+            const job = response.data?.jobDetails?.job;
+
+            if (!job) {
+              $("#job-detail").html(
+                "<p class='text-red-500'>Detail lowongan tidak tersedia!</p>"
+              );
+              return;
+            }
+
+            const jobHTML = `
+             <div class="b">
+        <div class="flex gap-6 items-start">
+          <img
+            src="${job.products?.branding?.logo?.url}"
+            alt="${job.title}"
+            class="w-16 h-16 object-contain"
+          />
+          <div class="space-y-2">
+            <h1 class="lg:text-2xl text-xl font-bold">${
+              job.title || "Tidak disebutkan"
+            }</h1>
+            <p class="text-sm text-gray-500">
+              ${job.classifications?.[0]?.label || "Tidak disebutkan"}
+              </p>
+            <p class="text-gray-600"><i class="fa-solid fa-building mr-5"></i>${
+              job.advertiser?.name || "Tidak disebutkan"
+            }</p>
+            <p class="text-sm text-gray-500"><i class="fa-solid fa-location-dot mr-4"></i>
+              ${job.location?.label || "Tidak disebutkan"}
+              </p>
+            <p class="text-sm text-gray-500"><i class="fa-solid fa-money-bill mr-3"></i>
+              ${job.salary?.label || "Tidak disebutkan"}
+              </p>
+            <p class="text-sm text-gray-500"><i class="fa-regular fa-clock mr-3.5"></i>
+              ${job.workTypes?.label || "Tidak disebutkan"}
+              </p>
+          </div>
+        </div>
+
+        <div class="mt-6">
+          <h2 class="text-lg font-bold mb-1">Deskripsi Pekerjaan</h2>
+            ${job.abstract || "Tidak tersedia"}</p>
+            <div>${job.content || ""}</div>
+        </div>
+
+        <div class="mt-6 flex items-center justify-between">
+          <div>
+            <p class="text-sm text-gray-500">Diposting 
+              ${job.listedAt?.label || "Tidak disebutkan"}
+              </p>
+            
+          </div>
+        </div>
+      </div>
+            `;
+
+            $("#job-detail").html(jobHTML);
+            $("#breadcrumb-title").text(job.title);
+          },
+          error: function (error) {
+            console.error("Error fetching job details:", error);
+            $("#job-detail").html(
+              "<p class='text-red-500'>Terjadi kesalahan saat memuat detail lowongan!</p>"
+            );
+          },
+        });
+      });
+    </script>
+  </body>
+</html>

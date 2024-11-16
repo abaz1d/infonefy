@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Detail Berita</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/arial-geo-bold@1.0.0/css/arial-geo-bold.min.css"
+    />
+  </head>
+  <body class="bg-gray-100 text-gray-800">
+    <header class="bg-[#4db5ff] text-white p-4">
+      <div class="container mx-auto flex justify-between items-center">
+        <h1 class="text-2xl font-bold">
+          <a href="index.html"> InfoNefy </a>
+        </h1>
+        <nav class="space-x-4">
+          <a href="news.html" class="hover:underline">Berita</a>
+          <a href="job-vacancy.html" class="hover:underline">Lowongan Kerja</a>
+          <a href="#kontak" class="hover:underline">Tentang</a>
+        </nav>
+      </div>
+    </header>
+    <div class="container mx-auto p-4">
+      <!-- Breadcrumb -->
+      <div class="flex items-center justify-between">
+        <button
+          id="back-button"
+          class="bg-slate-400 text-white p-2 rounded mb-4 flex items-center pr-2"
+          onclick="window.location.href = 'news.html'"
+        >
+          <i class="fa-solid fa-chevron-left mr-2"></i>
+          <span>Kembali</span>
+        </button>
+        <nav class="mb-4 ml-12" aria-label="Breadcrumb">
+          <ol class="list-reset flex text-gray-500">
+            <li>
+              <a
+                href="news.html"
+                class="text-blue-600 hover:underline flex items-center gap-2"
+              >
+                <i class="fa-solid fa-house"></i> Beranda</a
+              >
+            </li>
+            <li></li>
+            <li><span class="mx-2">/</span></li>
+            <li>
+              <a href="news.html" class="hover:underline">Berita</a>
+            </li>
+            <li><span class="mx-2">/</span></li>
+            <li class="line-clamp-1" id="breadcrumb-title">Detail Berita</li>
+          </ol>
+        </nav>
+      </div>
+
+      <!-- Konten Berita Detail -->
+      <div id="news-detail" class="bg-white p-6 rounded shadow">
+        <!-- Detail berita akan dimuat di sini -->
+      </div>
+    </div>
+
+    <script>
+      $(document).ready(function () {
+        // Mendapatkan parameter newsId dari URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const newsId = urlParams.get("newsId");
+
+        // Endpoint untuk mendapatkan detail berita
+        const endpoint = `https://www.idx.co.id/primary/NewsAnnouncement/GetNewsDetailWithLocale?locale=id-id&newsId=${newsId}`;
+
+        // Memuat detail berita
+        $.ajax({
+          url: endpoint,
+          method: "GET",
+          success: function (response) {
+            const { Title, Summary, PublishedDate, ImageUrl, Contents } =
+              response;
+
+            // Menampilkan data detail berita
+            const newsDetailHTML = `
+              <h1 class="lg:text-2xl text-xl font-semibold mb-4">${Title}</h1>
+              <p class="text-sm text-gray-500 mb-4">Published: ${new Date(
+                PublishedDate
+              ).toLocaleDateString("en-GB", {
+                day: "2-digit",
+                month: "long",
+                year: "numeric",
+              })}</p>
+              <img src="https://www.idx.co.id${ImageUrl}" alt="${Title}" class="w-full object-cover rounded mb-4">
+              <p class="text-gray-600 mb-4">${Summary}</p>
+              <div class="content mb-4">
+                ${Contents} <!-- Isi konten berita -->
+              </div>
+            `;
+            $("#news-detail").html(newsDetailHTML); // Menambahkan konten ke halaman
+            $("#breadcrumb-title").text(Title); // Mengubah judul breadcrumb
+          },
+          error: function (error) {
+            console.error("Error fetching news detail:", error);
+            $("#news-detail").html("<p>Gagal memuat detail berita.</p>");
+          },
+        });
+      });
+    </script>
+  </body>
+</html>

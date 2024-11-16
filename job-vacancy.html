@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Daftar Lowongan Kerja</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/arial-geo-bold@1.0.0/css/arial-geo-bold.min.css"
+    />
+  </head>
+  <body class="bg-gray-100 text-gray-800">
+    <header class="bg-[#4db5ff] text-white p-4">
+      <div class="container mx-auto flex justify-between items-center">
+        <h1 class="text-2xl font-bold">
+          <a href="index.html"> InfoNefy </a>
+        </h1>
+        <nav class="space-x-4">
+          <a href="news.html" class="hover:underline">Berita</a>
+          <a href="job-vacancy.html" class="underline">Lowongan Kerja</a>
+          <a href="#kontak" class="hover:underline">Tentang</a>
+        </nav>
+      </div>
+    </header>
+    <div class="container mx-auto p-4">
+      <h1 class="text-2xl font-bold mb-4">Daftar Lowongan Kerja</h1>
+
+      <!-- Input Pencarian -->
+      <div class="mb-6">
+        <input
+          type="text"
+          id="search-input"
+          class="w-full p-2 border border-gray-300 rounded"
+          placeholder="Cari pekerjaan..."
+        />
+      </div>
+
+      <div
+        id="job-container"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+      >
+        <!-- Lowongan pekerjaan akan dimuat di sini -->
+      </div>
+
+      <!-- Loading Spinner -->
+      <div
+        id="loading-spinner"
+        class="hidden flex justify-center items-center py-4"
+      >
+        <div
+          class="w-8 h-8 border-4 border-blue-500 border-dashed rounded-full animate-spin"
+        ></div>
+      </div>
+
+      <!-- Pesan Akhir Halaman -->
+      <div id="end-of-content" class="hidden text-center text-gray-600 py-4">
+        <p>Tidak ada lowongan lagi untuk dimuat.</p>
+      </div>
+    </div>
+
+    <script>
+      $(document).ready(function () {
+        const endpoint =
+          "https://id.jobstreet.com/api/jobsearch/v5/search?siteKey=ID-Main";
+        let currentPage = 1;
+        const detailEndpoint = "https://id.jobstreet.com/graphql";
+        let isLoading = false;
+        let isEndOfContent = false;
+        let searchKeyword = "";
+        let searchTimeout;
+
+        function showLoading(show) {
+          if (show) {
+            $("#loading-spinner").removeClass("hidden");
+          } else {
+            $("#loading-spinner").addClass("hidden");
+          }
+        }
+
+        function loadJobs(pageNumber) {
+          if (isLoading || isEndOfContent) return;
+
+          isLoading = true;
+          showLoading(true);
+
+          $.ajax({
+            url: endpoint,
+            method: "GET",
+            data: {
+              page: pageNumber,
+              pageSize: 12,
+              locale: "id-ID",
+              include: "seodata,joracrosslink,gptTargeting",
+              keywords: searchKeyword,
+            },
+            success: function (response) {
+              const { data } = response;
+
+              if (!data || data.length === 0) {
+                isEndOfContent = true;
+                $("#end-of-content").removeClass("hidden");
+                return;
+              }
+
+              const jobContainer = $("#job-container");
+              data.forEach((job) => {
+                const jobHTML = `
+                 <div class="relative bg-white flex flex-col border rounded-xl shadow-md  border-2 hover:border-slate-300 cursor-pointer hover:scale-105 transition duration-300 hover:shadow-xl" data-job-id="${
+                   job.id
+                 }">
+
+            <div class="relative rounded-t-xl" >
+                <div class="relative w-full aspect-video rounded-t-xl">
+                    <img class="rounded  h-full mx-auto object-none object-top-center rounded-t-xl"
+                        src="${job.branding?.serpLogoUrl || ""}" alt="${
+                  job.title
+                }">
+
+                    <div
+                        class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-b from-gray-800 to-gray-500 text-white">
+                       
+                        <p class="font-medium text-sm"> <i class="fa-solid fa-location-dot mr-3"></i> ${
+                          job.locations[0]?.label
+                        }</p>
+                </div>
+                </div>
+                </div>
+                
+                <div class="flex flex-col justify-beetween gap-3 px-4 py-2 h-full">
+                  <h2 class="text-lg font-semibold">${job.title}</h2>
+                  <p class="font-medium text-sm">${
+                    job.classifications[0].subclassification?.description
+                  } (${job.classifications[0].classification?.description})</p>
+                  ${
+                    job.advertiser.description
+                      ? `<p class="text-gray-600 mt-2"><i class="fa-solid fa-building mr-3"></i> ${job.advertiser.description}</p>`
+                      : ""
+                  }
+                  ${
+                    job.locations[0]?.label
+                      ? `<p class="text-gray-600"><i class="fa-solid fa-location-dot mr-3"></i> ${job.locations[0]?.label}</p>`
+                      : ""
+                  }
+                  ${
+                    job.salaryLabel
+                      ? `<p class="text-gray-600"><i class="fa-solid fa-dollar-sign mr-3"></i> ${job.salaryLabel}</p>`
+                      : ""
+                  }
+                 
+
+               <p class="text-sm text-gray-500 ml-auto mb-2 mt-auto">Tanggal Posting: ${
+                 job.listingDateDisplay || "Tidak tersedia"
+               }</p>
+            </div>
+
+        </div>
+                `;
+                //     <div class="bg-white p-4 rounded shadow-lg cursor-pointer hover:scale-105 transition duration-300 hover:bg-slate-200 border hover:border-slate-300" data-job-id="${
+                //       job.id
+                //     }">
+                //         <img src="${job.branding?.serpLogoUrl || ""}" alt="${
+                //   job.title
+                // }" class="w-full h-32 object-contain rounded">
+                //         <h2 class="text-xl font-semibold mt-2">${job.title}</h2>
+                //         <p class="text-gray-600 mt-2">${
+                //           job.advertiser.description
+                //         }</p>
+                //         <p class="text-sm text-gray-">Lokasi: ${
+                //           job.locations[0]?.label || "Tidak disebutkan"
+                //         }</p>
+                //         ${
+                //           job.salaryLabel
+                //             ? `<p class="text-sm text-gray-500 mb-4">Salary: ${job.salaryLabel}</p>`
+                //             : ""
+                //         }
+
+                //         ${
+                //           job.classifications?.length
+                //             ? `<p class="text-sm text-gray-500 mb-4">${job.classifications[0].subclassification?.description}(${job.classifications[0].classification?.description})</p>`
+                //             : ""
+                //         }
+                //         ${
+                //           job?.bulletPoints?.length
+                //             ? `<ul class="list-disc pl-6">${job.bulletPoints
+                //                 .map(
+                //                   (point) => `<li class="text-sm">${point}</li>`
+                //                 )
+                //                 .join("")}</ul>`
+                //             : ""
+                //         }
+                //         <p class="text-sm text-gray-">Tipe Pekerjaan: ${
+                //           job.workTypes[0] || "Tidak tersedia"
+                //         }</p>
+                //         <p class="text-sm text-gray-500">Tanggal Posting: ${
+                //           job.listingDateDisplay || "Tidak tersedia"
+                //         }</p>
+                //     </div>
+                jobContainer.append(jobHTML);
+              });
+
+              currentPage++;
+            },
+            error: function (error) {
+              console.error("Error fetching data:", error);
+            },
+            complete: function () {
+              isLoading = false;
+              showLoading(false);
+            },
+          });
+        }
+
+        $("#job-container").on("click", ".cursor-pointer", function () {
+          const jobId = $(this).data("job-id");
+          const correlationId = crypto.randomUUID();
+          const payload = {
+            operationName: "TrackJobDetailsViewed",
+            variables: {
+              locale: "en-AU",
+              input: {
+                jobseekerSessionId: crypto.randomUUID(),
+                jobId: jobId,
+                jobDetailsViewedCorrelationId: correlationId,
+                tags: {},
+              },
+            },
+            query: `mutation TrackJobDetailsViewed($input: TrackJobDetailsViewedInput!, $locale: Locale = "en-AU") {
+            trackJobDetailsViewed(input: $input) {
+              __typename
+              ... on TrackJobDetailsViewedSuccess {
+                __typename
+                eventId
+              }
+              ... on TrackJobDetailsViewedFailure {
+                error {
+                  __typename
+                  message(locale: $locale)
+                }
+                __typename
+              }
+            }
+          }`,
+          };
+
+          $.ajax({
+            url: detailEndpoint,
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(payload),
+            success: function (response) {
+              if (
+                response.data.trackJobDetailsViewed.__typename ===
+                "TrackJobDetailsViewedSuccess"
+              ) {
+                window.location.href = `detail-job.html?jobId=${jobId}`;
+              } else {
+                console.error("Failed to track job details:", response);
+              }
+            },
+            error: function (error) {
+              console.error("Error fetching job details:", error);
+            },
+          });
+        });
+
+        $("#search-input").on("input", function () {
+          clearTimeout(searchTimeout);
+          searchKeyword = $(this).val();
+          searchTimeout = setTimeout(function () {
+            if (!isLoading) {
+              currentPage = 1;
+              isEndOfContent = false;
+              $("#job-container").empty();
+              loadJobs(currentPage);
+            }
+          }, 500);
+        });
+
+        $(window).scroll(function () {
+          if (
+            $(window).scrollTop() + $(window).height() >=
+            $(document).height() - 50
+          ) {
+            loadJobs(currentPage);
+          }
+        });
+
+        loadJobs(currentPage);
+      });
+    </script>
+  </body>
+</html>
