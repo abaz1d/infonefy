@@ -3,17 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="robots" content="noindex" />
     <title>InfoNefy - Portal Berita dan Lowongan Kerja</title>
-    <meta
-      name="description"
-      content="
-    InfoNefy adalah portal berita dan lowongan kerja terkini di Indonesia. Dapatkan informasi terpercaya dan peluang kerja terbaik di sini."
-    />
+    <script src="https://cdn.tailwindcss.com"></script>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
     />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
@@ -21,12 +17,7 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <script defer src="https://cdn.tailwindcss.com"></script>
-    <script defer src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script
-      defer
-      src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"
-    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   </head>
   <body class="bg-white text-gray-800">
     <header class="bg-[#4db5ff] text-white p-4 sticky top-0 z-40">
@@ -330,9 +321,8 @@
                     <div class="relative">
                         <img class="w-full h-48 object-cover" src="https://www.idx.co.id${
                           item.ImageUrl
-                        }"
+                        }">
                         alt="${item.Title}">
-                        >
                         <div class="absolute bottom-0 right-0 bg-gray-800 text-white px-2 py-1 m-2 rounded-md text-xs"> ${new Date(
                           item.PublishedDate
                         ).toLocaleDateString("en-GB", {
