@@ -4,6 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Daftar Lowongan Kerja</title>
+    <meta
+      name="description"
+      content="
+    Daftar Lowongan Kerja merupakan halaman yang menampilkan daftar lowongan kerja terbaru dari JobStreet. Pengguna dapat melihat lowongan kerja terbaru, mencari lowongan kerja berdasarkan kata kunci, dan melihat detail lowongan kerja dengan mengklik card lowongan kerja.
+    "
+    />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link
@@ -141,8 +147,12 @@
                     <img class="rounded  h-full mx-auto object-none object-top-center rounded-t-xl"
                         src="${job.branding?.serpLogoUrl || ""}" alt="${
                   job.title
-                }">
-
+                }"
+                  height="192"
+                  width="320"
+                  loading="lazy"
+                  fetchpriority="low"
+                >
                     <div
                         class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-b from-gray-800 to-gray-500 text-white">
                        
@@ -182,46 +192,6 @@
 
         </div>
                 `;
-                //     <div class="bg-white p-4 rounded shadow-lg cursor-pointer hover:scale-105 transition duration-300 hover:bg-slate-200 border hover:border-slate-300" data-job-id="${
-                //       job.id
-                //     }">
-                //         <img src="${job.branding?.serpLogoUrl || ""}" alt="${
-                //   job.title
-                // }" class="w-full h-32 object-contain rounded">
-                //         <h2 class="text-xl font-semibold mt-2">${job.title}</h2>
-                //         <p class="text-gray-600 mt-2">${
-                //           job.advertiser.description
-                //         }</p>
-                //         <p class="text-sm text-gray-">Lokasi: ${
-                //           job.locations[0]?.label || "Tidak disebutkan"
-                //         }</p>
-                //         ${
-                //           job.salaryLabel
-                //             ? `<p class="text-sm text-gray-500 mb-4">Salary: ${job.salaryLabel}</p>`
-                //             : ""
-                //         }
-
-                //         ${
-                //           job.classifications?.length
-                //             ? `<p class="text-sm text-gray-500 mb-4">${job.classifications[0].subclassification?.description}(${job.classifications[0].classification?.description})</p>`
-                //             : ""
-                //         }
-                //         ${
-                //           job?.bulletPoints?.length
-                //             ? `<ul class="list-disc pl-6">${job.bulletPoints
-                //                 .map(
-                //                   (point) => `<li class="text-sm">${point}</li>`
-                //                 )
-                //                 .join("")}</ul>`
-                //             : ""
-                //         }
-                //         <p class="text-sm text-gray-">Tipe Pekerjaan: ${
-                //           job.workTypes[0] || "Tidak tersedia"
-                //         }</p>
-                //         <p class="text-sm text-gray-500">Tanggal Posting: ${
-                //           job.listingDateDisplay || "Tidak tersedia"
-                //         }</p>
-                //     </div>
                 jobContainer.append(jobHTML);
               });
 
