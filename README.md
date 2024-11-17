@@ -68,7 +68,19 @@ InfoNefy adalah sebuah platform berbasis web yang berfungsi sebagai portal infor
   [https://github.com/abaz1d/infonefy](https://github.com/abaz1d/infonefy)
 
 ## 10. Screenshot Sistem Informasi
-(Anda dapat menambahkan gambar-gambar tampilan sistem di bawah bagian ini)
+![desk-home](https://github.com/user-attachments/assets/f6ef0258-9824-4e20-af2d-4227c52a52d1)
+![hp-home](https://github.com/user-attachments/assets/0a13b571-0354-40b3-9e3a-a102c125ab5c)
+![Macbook-Air-infonefy-abaz1ds-projects vercel app](https://github.com/user-attachments/assets/8adc2da0-cea5-48d8-b6b7-2d19c5e7b12d)
+![iPhone-13-PRO-MAX-infonefy-abaz1ds-projects vercel app](https://github.com/user-attachments/assets/f45be8a1-dbfe-45f9-a11b-165e0602a31a)
+![Macbook-Air-infonefy-abaz1ds-projects vercel app (1)](https://github.com/user-attachments/assets/cb7ea4aa-0398-49d6-975a-6419b595e28e)
+![iPhone-13-PRO-MAX-infonefy-abaz1ds-projects vercel app (1)](https://github.com/user-attachments/assets/06345934-6e2a-41dd-94c1-478d5881e5d7)
+![Macbook-Air-infonefy-abaz1ds-projects vercel app (2)](https://github.com/user-attachments/assets/404a1074-f6b6-4e2e-9420-4561bccba563)
+![iPhone-13-PRO-MAX-infonefy-abaz1ds-projects vercel app (2)](https://github.com/user-attachments/assets/01dcb0c9-62ea-4c61-abbc-85a4e3f638b7)
+![Macbook-Air-infonefy-abaz1ds-projects vercel app (3)](https://github.com/user-attachments/assets/5dda80c9-b232-41c4-81e5-ac17a418d11b)
+![iPhone-13-PRO-MAX-infonefy-abaz1ds-projects vercel app (3)](https://github.com/user-attachments/assets/97c9f385-c373-4245-95a9-bb034d90d346)
+![Macbook-Air-infonefy-abaz1ds-projects vercel app (4)](https://github.com/user-attachments/assets/93bab9e7-f882-421e-bc22-4f87900a02bf)
+![iPhone-13-PRO-MAX-infonefy-abaz1ds-projects vercel app (4)](https://github.com/user-attachments/assets/242008d1-9ff4-4bdb-9531-7325e7b8b727)
+
 
 ## 11. Daftar Pustaka
 - **PT Bursa Efek Indonesia (IDX)**  
