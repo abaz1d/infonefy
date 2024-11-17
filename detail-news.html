@@ -100,7 +100,7 @@
         const newsId = urlParams.get("newsId");
 
         // Endpoint untuk mendapatkan detail berita
-        const endpoint = `https://www.idx.co.id/primary/NewsAnnouncement/GetNewsDetailWithLocale?locale=id-id&newsId=${newsId}&callback=handleResponse`;
+        const endpoint = `http://www.idx.co.id/primary/NewsAnnouncement/GetNewsDetailWithLocale?locale=id-id&newsId=${newsId}&callback=handleResponse`;
         function handleResponse(data) {
           console.log("wooooweww", data); // Data respons langsung diakses di sini
         }
