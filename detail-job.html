@@ -4,6 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Detail Lowongan Kerja</title>
+    <meta
+      name="description"
+      content="
+      Detail Lowongan Kerja merupakan halaman yang menampilkan detail lowongan kerja dari JobStreet. Pengguna dapat melihat detail lowongan kerja, seperti judul, deskripsi, lokasi, gaji, jenis pekerjaan, perusahaan, dan tanggal diposting. Pengguna juga dapat kembali ke halaman sebelumnya dengan menekan tombol 'Kembali'.
+    "
+    />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link
@@ -216,6 +222,10 @@
             src="${job.products?.branding?.logo?.url}"
             alt="${job.title}"
             class="w-16 h-16 object-contain"
+            height="64"
+            width="64"
+            loading="lazy"
+            fetchpriority="low"
           />
           <div class="space-y-2">
             <h1 class="lg:text-2xl text-xl font-bold">${
