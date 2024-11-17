@@ -3,7 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Infinite Scroll News</title>
+    <title>Daftar Berita</title>
+
+    <meta
+      name="description"
+      content="
+    Daftar Berita merupakan halaman yang menampilkan daftar berita terbaru dari IDX. Pengguna dapat melihat berita terbaru, mencari berita berdasarkan kata kunci, dan membaca berita lebih lanjut dengan mengklik card berita.
+    "
+    />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link
@@ -139,7 +146,8 @@
                     <div class="relative">
                         <img class="w-full h-48 object-cover" src="https://www.idx.co.id${
                           item.ImageUrl
-                        }">
+                        }"
+                        alt="${item.Title}" />
                         <div class="absolute bottom-0 right-0 bg-gray-800 text-white px-2 py-1 m-2 rounded-md text-xs"> ${new Date(
                           item.PublishedDate
                         ).toLocaleDateString("en-GB", {
