@@ -4,6 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Detail Berita</title>
+    <meta
+      name="description"
+      content="
+      Detail Berita merupakan halaman yang menampilkan informasi lebih lanjut mengenai berita yang dipilih oleh pengguna. Pengguna dapat melihat judul berita, tanggal publikasi, gambar berita, ringkasan berita, dan isi berita.
+    "
+    />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link
@@ -114,7 +120,12 @@
                 month: "long",
                 year: "numeric",
               })}</p>
-              <img src="https://www.idx.co.id${ImageUrl}" alt="${Title}" class="w-full object-cover rounded mb-4">
+              <img src="https://www.idx.co.id${ImageUrl}" alt="${Title}"
+              height="400"
+              width="600"
+              loading="lazy"
+              fetchpriority="low"
+              class="w-full object-cover rounded mb-4">
               <p class="text-gray-600 mb-4">${Summary}</p>
               <div class="content mb-4">
                 ${Contents} <!-- Isi konten berita -->
