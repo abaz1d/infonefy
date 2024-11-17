@@ -127,10 +127,6 @@
               pageSize: 12,
               keyword: searchKeyword, // Kirim kata kunci pencarian
             },
-            headers: {
-              "Access-Control-Allow-Origin": "*", // Allow CORS
-              "Access-Control-Allow-Headers": "*", // Allow CORS
-            },
             success: function (response) {
               const { Items, PageCount } = response;
 

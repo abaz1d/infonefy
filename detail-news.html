@@ -106,10 +106,7 @@
         $.ajax({
           url: endpoint,
           method: "GET",
-          headers: {
-            "Access-Control-Allow-Origin": "*", // Allow CORS
-            "Access-Control-Allow-Headers": "*", // Allow CORS
-          },
+
           success: function (response) {
             const { Title, Summary, PublishedDate, ImageUrl, Contents } =
               response;
