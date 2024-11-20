@@ -240,9 +240,13 @@
           };
 
           $.ajax({
-            url: detailEndpoint,
+            url: `https://cors-anywhere.herokuapp.com/${detailEndpoint}`,
             method: "POST",
             contentType: "application/json",
+            headers: {
+              "X-Requested-With": "XMLHttpRequest", // Tambahkan header X-Requested-With
+              Origin: "https://infonefy.vercel.app", // Atur Origin sesuai dengan domain aplikasi Anda
+            },
             data: JSON.stringify(payload),
             success: function (response) {
               if (
