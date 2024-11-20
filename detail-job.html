@@ -201,9 +201,13 @@
         };
 
         $.ajax({
-          url: "https://id.jobstreet.com/graphql",
+          url: "https://cors-anywhere.herokuapp.com/https://id.jobstreet.com/graphql",
           method: "POST",
           contentType: "application/json",
+          headers: {
+            "X-Requested-With": "XMLHttpRequest", // Tambahkan header X-Requested-With
+            Origin: "https://infonefy.vercel.app", // Atur Origin sesuai dengan domain aplikasi Anda
+          },
           data: JSON.stringify(payload),
           success: function (response) {
             const job = response.data?.jobDetails?.job;
