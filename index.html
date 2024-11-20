@@ -266,8 +266,8 @@
       }
     });
 
-    const endpointNews =
-      "https://www.idx.co.id/primary/NewsAnnouncement/GetNewsSearch";
+    const endpointNews = "http://api.mediastack.com/v1/news";
+    const apiKeyNews = "f62cc0a9f3774ac062d68f18a96120fe";
     let currentPageNews = 1; // Halaman saat ini
     let isLoadingNews = false; // Status loading
     let isEndOfContentNews = false; // Menandai akhir konten
@@ -294,55 +294,58 @@
 
     // Fungsi untuk memuat berita
     function loadNews(pageNumber) {
-      if (isLoadingNews || isEndOfContentNews) return; // Jangan muat lagi jika sedang loading atau sudah di akhir
+      if (isLoadingNews || isEndOfContentNews) return;
 
-      isLoadingNews = true; // Set status loading
-      showLoading(true); // Tampilkan spinner
+      isLoadingNews = true;
+      showLoading(true);
+
       $.ajax({
         url: endpointNews,
         method: "GET",
         data: {
-          locale: "id-id",
-          pageNumber: pageNumber,
-          pageSize: 5,
-          keyword: searchKeywordNews, // Kirim kata kunci pencarian
+          access_key: apiKeyNews,
+          limit: 12,
+          offset: (pageNumber - 1) * 12,
+          keywords: searchKeywordNews,
+          languages: "en",
+          countries: "id",
         },
         success: function (response) {
-          const { Items, PageCount } = response;
+          const { pagination, data: items } = response;
 
-          if (Items.length === 0 || currentPageNews > PageCount) {
-            isEndOfContentNews = true; // Tandai akhir konten
+          if (!items || items.length === 0) {
+            isEndOfContent = true;
             $("#end-of-content").removeClass("hidden");
             return;
           }
 
-          // Tampilkan berita
           const newsContainer = $("#news-container");
-          Items.forEach((item) => {
+          items.forEach((item) => {
             const newsHTML = `
-                <div class="swiper-slide bg-white h-full rounded-xl shadow-md overflow-hidden border hover:border-slate-300 cursor-pointer hover:scale-105 transition duration-300 hover:shadow-xl w-11/12 max-lg:max-w-xl lg:w-1/2 group" data-news-id="${
-                  item.ItemId
-                }">
+                <div class="swiper-slide bg-white h-full rounded-xl shadow-md overflow-hidden border hover:border-slate-300 cursor-pointer hover:scale-105 transition duration-300 hover:shadow-xl w-11/12 max-lg:max-w-xl lg:w-1/2 group"  data-news-url="${
+                  item.url
+                }" title-news="${item.title}">
                     <div class="relative">
-                        <img class="w-full h-48 object-cover" src="https://www.idx.co.id${
-                          item.ImageUrl
-                        }"
-                        alt="${item.Title || "-"}">
-                        <div class="absolute bottom-0 right-0 bg-gray-800 text-white px-2 py-1 m-2 rounded-md text-xs"> ${new Date(
-                          item.PublishedDate
-                        ).toLocaleDateString("en-GB", {
-                          day: "2-digit",
-                          month: "long",
-                          year: "numeric",
-                        })}
-                        </div>
+                        <img class="w-full h-48 object-cover"  src="${
+                          item.image || "https://via.placeholder.com/384x192"
+                        }" alt="${item.title}">
+                        <div class="absolute bottom-0 right-0 bg-gray-800 text-white px-2 py-1 m-2 rounded-md text-xs">
+                        ${new Date(item.published_at).toLocaleDateString(
+                          "en-GB",
+                          {
+                            day: "2-digit",
+                            month: "long",
+                            year: "numeric",
+                          }
+                        )}
+                      </div>
                     </div>
                     <div class="p-4">
                         <div class="text-lg font-medium text-gray-800 mb-2 line-clamp-2">${
-                          item.Title
+                          item.title
                         }</div>
                         <p class="text-gray-500 text-sm line-clamp-3">
-                         ${item.Summary}
+                      ${item.description || "Tidak ada deskripsi tersedia."}
                         </p>
                     </div>
                 </div>
@@ -351,14 +354,14 @@
             newsContainer.append(newsHTML);
           });
 
-          currentPageNews++; // Increment halaman
+          currentPageNews++;
         },
         error: function (error) {
           console.error("Error fetching data:", error);
         },
         complete: function () {
-          isLoadingNews = false; // Reset status loading
-          showLoading(false); // Sembunyikan spinner
+          isLoadingNews = false;
+          showLoading(false);
         },
       });
     }
@@ -511,8 +514,11 @@
 
     // Event listener untuk klik pada card
     $("#news-container").on("click", ".cursor-pointer", function () {
-      const newsId = $(this).data("news-id"); // Ambil ID berita dari atribut data-news-id
-      window.location.href = `detail-news.html?newsId=${newsId}`; // Arahkan ke halaman detail
+      const newsUrl = $(this).data("news-url"); // Ambil URL berita dari atribut
+      const titleNews = $(this).attr("title-news");
+      window.location.href = `detail-news.html?newsUrl=${encodeURIComponent(
+        newsUrl
+      )}&titleNews=${titleNews}`; // Arahkan ke halaman detail
     });
 
     loadJobs(currentPage);

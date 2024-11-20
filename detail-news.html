@@ -95,52 +95,43 @@
 
     <script>
       $(document).ready(function () {
-        // Mendapatkan parameter newsId dari URL
+        // Mendapatkan parameter dari URL
         const urlParams = new URLSearchParams(window.location.search);
-        const newsId = urlParams.get("newsId");
+        const newsUrl = urlParams.get("newsUrl");
+        const titleNews = urlParams.get("titleNews");
 
-        // Endpoint untuk mendapatkan detail berita
-        const endpoint = `https://www.idx.co.id/primary/NewsAnnouncement/GetNewsDetailWithLocale?locale=id-id&newsId=${newsId}`;
+        // Menampilkan judul berita di breadcrumb jika titleNews ada
+        if (titleNews) {
+          $("#breadcrumb-title").text(decodeURIComponent(titleNews));
+        } else {
+          $("#breadcrumb-title").text("Detail Berita");
+        }
 
-        // Memuat detail berita
-        $.ajax({
-          url: endpoint,
-          method: "GET",
+        if (newsUrl) {
+          // Menampilkan berita menggunakan iframe
+          const newsDetailHTML = `
+        <h1 class="lg:text-2xl text-xl font-semibold mb-4">${decodeURIComponent(
+          titleNews || "Detail Berita"
+        )}</h1>
+        <iframe 
+          src="${decodeURIComponent(newsUrl)}" 
+          class="w-full h-screen border-0 rounded" 
+          loading="lazy" 
+          fetchpriority="low"
+        ></iframe>
+      `;
 
-          success: function (response) {
-            const { Title, Summary, PublishedDate, ImageUrl, Contents } =
-              response;
-
-            // Menampilkan data detail berita
-            const newsDetailHTML = `
-              <h1 class="lg:text-2xl text-xl font-semibold mb-4">${Title}</h1>
-              <p class="text-sm text-gray-500 mb-4">Published: ${new Date(
-                PublishedDate
-              ).toLocaleDateString("en-GB", {
-                day: "2-digit",
-                month: "long",
-                year: "numeric",
-              })}</p>
-              <img src="https://www.idx.co.id${ImageUrl}" alt="${Title}"
-              height="400"
-              width="600"
-              loading="lazy"
-              fetchpriority="low"
-              class="w-full object-cover rounded mb-4">
-              <p class="text-gray-600 mb-4">${Summary}</p>
-              <div class="content mb-4">
-                ${Contents} <!-- Isi konten berita -->
-              </div>
-            `;
-            $("#news-detail").html(newsDetailHTML); // Menambahkan konten ke halaman
-            $("#breadcrumb-title").text(Title); // Mengubah judul breadcrumb
-          },
-          error: function (error) {
-            console.error("Error fetching news detail:", error);
-            $("#news-detail").html("<p>Gagal memuat detail berita.</p>");
-          },
-        });
+          // Menambahkan iframe ke dalam kontainer #news-detail
+          $("#news-detail").html(newsDetailHTML);
+        } else {
+          // Menampilkan pesan error jika parameter newsUrl tidak ada
+          $("#news-detail").html(
+            "<p class='text-red-500'>URL berita tidak ditemukan.</p>"
+          );
+        }
       });
+
+      // Fungsi untuk menampilkan atau menyembunyikan menu navigasi
       $("#menu-toggle").click(function () {
         $("#navbar-menu").toggleClass("hidden");
 
