@@ -83,8 +83,8 @@ InfoNefy adalah sebuah platform berbasis web yang berfungsi sebagai portal infor
 
 
 ## 11. Daftar Pustaka
-- **PT Bursa Efek Indonesia (IDX)**  
-  API IDX digunakan untuk mengambil data terkait informasi pasar saham. Informasi lebih lanjut dapat diakses di: [https://www.idx.co.id](https://www.idx.co.id).
+- **PT Bursa Efek Mediastack (IDX)**  
+  API IDX digunakan untuk mengambil data terkait informasi pasar saham. Informasi lebih lanjut dapat diakses di: [[https://www.idx.co.id](https://mediastack.com]([https://www.idx.co.id](https://mediastack.com/)).
   
 - **JobStreet by SEEK**  
   API JobStreet digunakan untuk mengambil data lowongan pekerjaan. Informasi lebih lanjut dapat diakses di: [https://www.jobstreet.co.id](https://www.jobstreet.co.id).
