@@ -83,7 +83,7 @@ InfoNefy adalah sebuah platform berbasis web yang berfungsi sebagai portal infor
 
 
 ## 11. Daftar Pustaka
-- **PT Bursa Efek Mediastack (IDX)**  
+- **PT Mediastack**  
   API Mediastack digunakan untuk mengambil data terkait informasi. Informasi lebih lanjut dapat diakses di: [https://mediastack.com](https://mediastack.com).
   
 - **JobStreet by SEEK**  
