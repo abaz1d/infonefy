@@ -37,7 +37,7 @@ InfoNefy adalah sebuah platform berbasis web yang berfungsi sebagai portal infor
 - FontAwesome untuk menampilkan ikon pada antarmuka pengguna.
 
 ### Back-End:
-- API IDX (PT Bursa Efek Indonesia) untuk mengambil data terkini tentang pasar modal.
+- API Mediastack untuk mengambil data berita terkini.
 - API JobStreet by Seek untuk mendapatkan daftar lowongan kerja terkini.  
   *Catatan: Penggunaan API ini semata-mata untuk tujuan pembelajaran dan memenuhi tugas proyek, tanpa dimaksudkan untuk kepentingan komersial.*
 
@@ -58,7 +58,7 @@ InfoNefy adalah sebuah platform berbasis web yang berfungsi sebagai portal infor
 ## 8. Alur Kerja Sistem
 1. Pengguna membuka halaman utama InfoNefy.
 2. Pengguna memilih salah satu fitur utama: Berita, Lowongan Kerja, atau Tentang Kami.
-3. Jika memilih halaman berita, pengguna dapat membaca artikel atau melihat daftar berita terkini yang diambil dari API IDX.
+3. Jika memilih halaman berita, pengguna dapat membaca artikel atau melihat daftar berita terkini yang diambil dari API Mediastack.
 4. Jika memilih halaman lowongan kerja, pengguna dapat menelusuri pekerjaan sesuai kategori atau lokasi yang diambil dari API JobStreet.
 
 ## 9. Akses Website dan Source Code
