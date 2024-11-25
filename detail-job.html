@@ -115,57 +115,7 @@
     </div>
 
     <script>
-      $(document).ready(async function () {
-        function fetchWithAccessRequest() {
-          // URL endpoint
-          const url = "https://cors-anywhere.herokuapp.com/corsdemo";
-
-          // Langkah 1: Permintaan pertama untuk mendapatkan nilai accessRequest
-          $.ajax({
-            url: url,
-            method: "GET",
-            headers: {
-              "X-Requested-With": "XMLHttpRequest", // Tambahkan header X-Requested-With
-              Origin: "https://infonefy.vercel.app", // Atur Origin sesuai dengan domain aplikasi Anda
-            },
-            success: function (response) {
-              // Parsing respons HTML
-              const parser = new DOMParser();
-              const htmlDoc = parser.parseFromString(response, "text/html");
-              const accessRequestValue = htmlDoc.querySelector(
-                'input[name="accessRequest"]'
-              ).value;
-
-              if (accessRequestValue) {
-                // Langkah 2: Permintaan kedua dengan query parameter accessRequest
-                const finalUrl = `${url}?accessRequest=${accessRequestValue}`;
-                $.ajax({
-                  url: finalUrl,
-                  method: "GET",
-                  headers: {
-                    "X-Requested-With": "XMLHttpRequest", // Tambahkan header lagi
-                    Origin: "https://infonefy.vercel.app", // Atur Origin sesuai dengan domain aplikasi Anda
-                  },
-                  success: function (finalResponse) {
-                    console.log(
-                      "Respons dari permintaan kedua:",
-                      finalResponse
-                    );
-                  },
-                  error: function (error) {
-                    console.error("Permintaan kedua gagal:", error);
-                  },
-                });
-              } else {
-                console.error("Nilai accessRequest tidak ditemukan.");
-              }
-            },
-            error: function (error) {
-              console.error("Permintaan pertama gagal:", error);
-            },
-          });
-        }
-        await fetchWithAccessRequest();
+      $(document).ready(function () {
         const detailEndpoint = "https://id.jobstreet.com/graphql";
 
         function getQueryParameter(name) {
